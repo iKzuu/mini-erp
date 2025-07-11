@@ -1,5 +1,10 @@
-def app():
-    print("something")
+from front_page import MainWindow
+from PyQt5.QtWidgets import QApplication
+import sys
 
-if __name__ == "__main__":
-    app()
+app = QApplication(sys.argv)
+
+window = MainWindow()
+
+window.show()
+app.exec()
