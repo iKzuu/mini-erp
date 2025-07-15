@@ -1,41 +1,26 @@
 <RCC>
   <qresource prefix="icons">
+    <file>search.svg</file>
+    <file>search-blue.svg</file>
+    <file>search-white.svg</file>
+    <file>arrow-down.svg</file>
+    <file>arrow-down-blue.svg</file>
+    <file>arrow-down-white.svg</file>
+    <file>camera.svg</file>
+    <file>camera-blue.svg</file>
+    <file>camera-white.svg</file>
+    <file>category.svg</file>
+    <file>category-blue.svg</file>
+    <file>category-white.svg</file>
+    <file>dashboard.svg</file>
+    <file>dashboard-blue.svg</file>
+    <file>dashboard-white.svg</file>
     <file>delete.svg</file>
     <file>delete-blue.svg</file>
     <file>delete-white.svg</file>
     <file>edit.svg</file>
     <file>edit-blue.svg</file>
     <file>edit-white.svg</file>
-    <file>arrow-down.svg</file>
-    <file>arrow-down-blue.svg</file>
-    <file>arrow-down-white.svg</file>
-    <file>users.svg</file>
-    <file>users-blue.svg</file>
-    <file>users-white.svg</file>
-    <file>category.svg</file>
-    <file>category-blue.svg</file>
-    <file>category-white.svg</file>
-    <file>profile.svg</file>
-    <file>profile-blue.svg</file>
-    <file>profile-white.svg</file>
-    <file>transactions.svg</file>
-    <file>transactions-blue.svg</file>
-    <file>transactions-white.svg</file>
-    <file>warehouse.svg</file>
-    <file>warehouse-blue.svg</file>
-    <file>warehouse-white.svg</file>
-    <file>moon.svg</file>
-    <file>moon-blue.svg</file>
-    <file>moon-white.svg</file>
-    <file>sun.svg</file>
-    <file>sun-blue.svg</file>
-    <file>sun-white.svg</file>
-    <file>camera.svg</file>
-    <file>camera-blue.svg</file>
-    <file>camera-white.svg</file>
-    <file>dashboard.svg</file>
-    <file>dashboard-blue.svg</file>
-    <file>dashboard-white.svg</file>
     <file>file.svg</file>
     <file>file-blue.svg</file>
     <file>file-white.svg</file>
@@ -45,17 +30,35 @@
     <file>history.svg</file>
     <file>history-blue.svg</file>
     <file>history-white.svg</file>
+    <file>moon.svg</file>
+    <file>moon-blue.svg</file>
+    <file>moon-white.svg</file>
     <file>people.svg</file>
     <file>people-blue.svg</file>
     <file>people-white.svg</file>
+    <file>profile.svg</file>
+    <file>profile-blue.svg</file>
+    <file>profile-white.svg</file>
     <file>setting.svg</file>
     <file>setting-blue.svg</file>
     <file>setting-white.svg</file>
     <file>stock.svg</file>
     <file>stock-blue.svg</file>
     <file>stock-white.svg</file>
+    <file>sun.svg</file>
+    <file>sun-blue.svg</file>
+    <file>sun-white.svg</file>
     <file>support.svg</file>
     <file>support-blue.svg</file>
     <file>support-white.svg</file>
+    <file>transactions.svg</file>
+    <file>transactions-blue.svg</file>
+    <file>transactions-white.svg</file>
+    <file>users.svg</file>
+    <file>users-blue.svg</file>
+    <file>users-white.svg</file>
+    <file>warehouse.svg</file>
+    <file>warehouse-blue.svg</file>
+    <file>warehouse-white.svg</file>
   </qresource>
 </RCC>

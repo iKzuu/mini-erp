@@ -5,11 +5,14 @@ from PyQt5.QtCore import Qt, QSize
 import resources_rc
 import data_dummy
 
+# from modules.inventory.services.scanner_service import ScannerService
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi("minierp_cool.ui", self)
+        uic.loadUi("ui/minierp_cool.ui", self)
         
+        # Side menu
         # Hide icon only sidebar when app start
         self.icon_only_widget.hide()
         
@@ -77,34 +80,75 @@ class MainWindow(QMainWindow):
             "",
             "All Files (*);;Text Files (*.txt);;Images (*.png *.jpg)"
         )
-        if file_path:
-            print("File dipilih:", file_path)
+        # if file_path:
+        #     ScannerService.scan_barang(file_path)
 
     # Function for load dummy data from data_dummy.py
     def load_data(self):
-        data = data_dummy.dummy_data
+        # data = data_dummy.dummy_data
 
-        row_count = len(data)
-        column_count = len(data[0]) + 1  # Tambah 1 kolom Action
+        # row_count = len(data)
+        # column_count = len(data[0]) + 1  # Tambah 1 kolom Action
 
-        self.stockTableWidget.setRowCount(row_count)
-        self.stockTableWidget.setColumnCount(column_count)
+        # self.stockTableWidget.setRowCount(row_count)
+        # self.stockTableWidget.setColumnCount(column_count)
+        
+        tables = [
+            {
+                "table": self.stockTableWidget,
+                "headers": ["ID", "Kode Barang", "Nama Barang", "Satuan", "Harga Beli", "Harga Jual", "Stock", "Deskripsi", ""],
+                "data": data_dummy.dummy_stock
+            },
+            {
+                "table": self.supplierTableWidget,
+                "headers": ["ID", "ID Barang", "Nama", "Telepon", "Alamat", ""],
+                "data": data_dummy.dummy_supplier
+            },
+            {
+                "table": self.transactionTableWidget,
+                "headers": ["ID", "ID Barang", "ID Gudang", "Tanggal", "Jenis", "Jumlah", "Keterangan", ""],
+                "data": data_dummy.dummy_transaction
+            },
+            {
+                "table": self.categoryTableWidget,
+                "headers": ["ID", "ID Gudang", "Nama", "Deskripsi", ""],
+                "data": data_dummy.dummy_category
+            },
+            {
+                "table": self.warehouseTableWidget,
+                "headers": ["ID", "Nama Warehouse", "Keterangan", "Lokasi", ""],
+                "data": data_dummy.dummy_warehouse
+            },
+            {
+                "table": self.userTableWidget,
+                "headers": ["ID", "Nama Lengkap", "Password", "Role", "Refresh Token", "Sign Status", ""],
+                "data": data_dummy.dummy_user
+            },
+            {
+                "table": self.historyTableWidget,
+                "headers": ["ID", "ID Pengguna", "ID Entitas", "ID Gudang", "Waktu", "Aksi", "Entitas", "Before Data", "After Data", "Keterangan", ""],
+                "data": data_dummy.dummy_history
+            }
+        ]
+        
+        for info in tables:
+            table = info["table"]
+            headers = info["headers"]
+            data = info["data"]
+            
+            row_count = len(data)
+            column_count = len(headers)
+            
+            table.setRowCount(row_count)
+            table.setColumnCount(column_count)
+            table.setHorizontalHeaderLabels(headers)
 
-        headers = ["ID", "Kode Barang", "Nama Barang", "Deskripsi",
-                "Satuan", "Harga Beli", "Harga Jual", "Stock", ""]
-        self.stockTableWidget.setHorizontalHeaderLabels(headers)
-
-        for row_num, row_data in enumerate(data):
-            for col_num, cell_data in enumerate(row_data):
-                item = QTableWidgetItem(str(cell_data))
-                self.stockTableWidget.setItem(row_num, col_num, item)
-                
-            self.add_crud_buttons(self.stockTableWidget, row_num)
-            # self.add_crud_buttons(self.supplierTableWidget, row_num)
-            # self.add_crud_buttons(self.transactionTableWidget, row_num)
-            # self.add_crud_buttons(self.categoryTableWidget, row_num)
-            # self.add_crud_buttons(self.warehouseTableWidget, row_num)
-            # self.add_crud_buttons(self.userTableWidget, row_num)
+            for row_num, row_data in enumerate(data):
+                for col_num, cell_data in enumerate(row_data):
+                    item = QTableWidgetItem(str(cell_data))
+                    table.setItem(row_num, col_num, item)
+                    
+                self.add_crud_buttons(table, row_num)
             
     def add_crud_buttons(self, table, row):
         widget = QWidget()
