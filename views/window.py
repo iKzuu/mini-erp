@@ -1,9 +1,11 @@
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView, QMessageBox
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QSize
 import resources_rc
 import data_dummy
+from .stockEditDialog import StockEditDialog
+from .deleteDataDialog import DeleteDataDialog
 
 # from modules.inventory.services.scanner_service import ScannerService
 
@@ -63,9 +65,6 @@ class MainWindow(QMainWindow):
         prev_btn.setText("<")
         next_btn.setText(">")
         
-        # Make vertical header table hidden
-        # self.stockTableWidget.verticalHeader().setVisible(False)
-        
         # load data dummy
         self.load_data()
 
@@ -85,13 +84,6 @@ class MainWindow(QMainWindow):
 
     # Function for load dummy data from data_dummy.py
     def load_data(self):
-        # data = data_dummy.dummy_data
-
-        # row_count = len(data)
-        # column_count = len(data[0]) + 1  # Tambah 1 kolom Action
-
-        # self.stockTableWidget.setRowCount(row_count)
-        # self.stockTableWidget.setColumnCount(column_count)
         
         tables = [
             {
@@ -211,10 +203,12 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(col_index, QHeaderView.ResizeToContents)
         
     def edit_row(self, table, row):
-        print(f"Edit row {row} di tabel: {table.objectName()}")
+        dialog = StockEditDialog(table, row)
+        dialog.exec_()
 
     def delete_row(self, table, row):
-        print(f"Delete row {row} di tabel: {table.objectName()}")
+        dialog = DeleteDataDialog(table, row)
+        dialog.exec_()
 
     def toggleSidebar(self):
         if self.icon_text_widget.isVisible():
