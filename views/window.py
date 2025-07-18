@@ -203,6 +203,11 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(col_index, QHeaderView.ResizeToContents)
         
     def edit_row(self, table, row):
+        table_name = table.objectName()
+        
+        if table_name == "stockTableWidget":
+            dialog = StockEditDialog(table, row)
+        
         dialog = StockEditDialog(table, row)
         dialog.exec_()
 

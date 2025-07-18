@@ -6,26 +6,26 @@ import resources_rc
 class StockEditDialog(QDialog):
     def __init__(self, table, row):
         super(StockEditDialog, self).__init__()
-        uic.loadUi("ui/stockDialog.ui", self)
+        uic.loadUi("ui/stockEditDialog.ui", self)
         
         self.table = table
         self.row = row
         
-        kode_barang = table.item(row, 1).text()
-        nama_barang = table.item(row, 2).text()
-        satuan = table.item(row, 3).text()
-        harga_beli = table.item(row, 4).text()
-        harga_jual = table.item(row, 5).text()
+        item_code = table.item(row, 1).text()
+        item_name = table.item(row, 2).text()
+        units_of_quantity = table.item(row, 3).text()
+        purchase_price = table.item(row, 4).text()
+        selling_price = table.item(row, 5).text()
         stock = table.item(row, 6).text()
-        deskripsi = table.item(row, 7).text()
+        description = table.item(row, 7).text()
         
-        self.editKodeBrg.setText(kode_barang)
-        self.editNamaBrg.setText(nama_barang)
-        self.editSatuan.setText(satuan)
-        self.editHargaBli.setText(harga_beli)
-        self.editHargaJual.setText(harga_jual)
+        self.editItemCode.setText(item_code)
+        self.editItemName.setText(item_name)
+        self.editUnitsOfQuantity.setText(units_of_quantity)
+        self.editPurchasePrice.setText(purchase_price)
+        self.editSellingPrice.setText(selling_price)
         self.editStock.setText(stock)
-        self.editDeskripsi.setText(deskripsi)
+        self.editDescription.setText(description)
         
         # Make window frameless from default window frame
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -37,22 +37,22 @@ class StockEditDialog(QDialog):
         
     def save_edited_data(self):
         # take data from input
-        kode_barang = self.editKodeBrg.text()
-        nama_barang = self.editNamaBrg.text()
-        satuan = self.editSatuan.text()
-        harga_beli = self.editHargaBli.text()
-        harga_jual = self.editHargaJual.text()
+        item_code = self.editItemCode.text()
+        item_name = self.editItemName.text()
+        units_of_quantity = self.editUnitsOfQuantity.text()
+        purchase_price = self.editPurchasePrice.text()
+        selling_price = self.editSellingPrice.text()
         stock = self.editStock.text()
-        deskripsi = self.editDeskripsi.text()
+        description = self.editDescription.text()
         
         # update the table data
-        self.table.setItem(self.row, 1, self.__new__item(kode_barang))
-        self.table.setItem(self.row, 2, self.__new__item(nama_barang))
-        self.table.setItem(self.row, 3, self.__new__item(satuan))
-        self.table.setItem(self.row, 4, self.__new__item(harga_beli))
-        self.table.setItem(self.row, 5, self.__new__item(harga_jual))
+        self.table.setItem(self.row, 1, self.__new__item(item_code))
+        self.table.setItem(self.row, 2, self.__new__item(item_name))
+        self.table.setItem(self.row, 3, self.__new__item(units_of_quantity))
+        self.table.setItem(self.row, 4, self.__new__item(purchase_price))
+        self.table.setItem(self.row, 5, self.__new__item(selling_price))
         self.table.setItem(self.row, 6, self.__new__item(stock))
-        self.table.setItem(self.row, 7, self.__new__item(deskripsi))
+        self.table.setItem(self.row, 7, self.__new__item(description))
         
         self.accept() # to close dialog
      
