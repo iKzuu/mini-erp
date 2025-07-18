@@ -15,8 +15,9 @@ class DeleteDataDialog(QDialog):
         self.setWindowFlags(Qt.FramelessWindowHint)
         
         self.deleteBtn.clicked.connect(self.confirm_delete)
+        self.cancelBtn.clicked.connect(self.reject)
+        
         self.closeBtn.clicked.connect(self.close)
-        self.cancelBtn.clicked.connect(self.close)
     
     # Function for delete data when the deleteBtn clicked
     def confirm_delete(self):
