@@ -636,7 +636,7 @@ QPushButton:hover{
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="chooseFileBtn">
@@ -1007,7 +1007,7 @@ QScrollBar::groove:vertical {
         <number>5</number>
        </property>
        <attribute name="horizontalHeaderVisible">
-        <bool>true</bool>
+        <bool>false</bool>
        </attribute>
        <attribute name="horizontalHeaderCascadingSectionResizes">
         <bool>false</bool>
@@ -2893,7 +2893,7 @@ QScrollBar::groove:vertical {
        </column>
        <column>
         <property name="text">
-         <string>Nama Warehouse</string>
+         <string>Nama Gudang</string>
         </property>
        </column>
        <column>
