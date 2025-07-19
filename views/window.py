@@ -4,8 +4,9 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QSize
 import resources_rc
 import data_dummy
-from .stockEditDialog import StockEditDialog
-from .deleteDataDialog import DeleteDataDialog
+from .stock_edit_dialog import StockEditDialog
+from .supplier_edit_dialog import SupplierEditDialog
+from .delete_data_dialog import DeleteDataDialog
 
 # from modules.inventory.services.scanner_service import ScannerService
 
@@ -150,6 +151,7 @@ class MainWindow(QMainWindow):
         layout.setSpacing(50)
         layout.setAlignment(Qt.AlignCenter)
 
+        # Edit Button
         btn_edit = QPushButton()
         btn_edit.setIcon(QIcon(":/icons/edit-blue.svg"))
         btn_edit.setIconSize(QSize(16, 16))
@@ -165,8 +167,8 @@ class MainWindow(QMainWindow):
                     background-color: #D9D9D9;
                 }
             """)
-        btn_edit.clicked.connect(lambda _, r=row, t=table: self.edit_row(t, r))
-
+        
+        # Delete Button
         btn_delete = QPushButton()
         btn_delete.setIcon(QIcon(":/icons/delete-blue.svg"))
         btn_delete.setIconSize(QSize(16, 16))
@@ -182,7 +184,9 @@ class MainWindow(QMainWindow):
                     background-color: #D9D9D9;
                 }
             """)
-        btn_delete.clicked.connect(lambda _, r=row, t=table: self.delete_row(t, r))
+        
+        btn_edit.clicked.connect(lambda _, b=btn_edit: self.edit_row(table, b))
+        btn_delete.clicked.connect(lambda _, b=btn_delete: self.delete_row(table, b))
 
         layout.addWidget(btn_edit)
         layout.addWidget(btn_delete)
@@ -190,7 +194,7 @@ class MainWindow(QMainWindow):
 
         col_index = table.columnCount() - 1
 
-        # Tambahkan widget ke cell
+        # add widget to cell
         table.setCellWidget(row, col_index, widget)
 
         # Biar cell Action tidak bisa di-select
@@ -202,16 +206,25 @@ class MainWindow(QMainWindow):
         header = table.horizontalHeader()
         header.setSectionResizeMode(col_index, QHeaderView.ResizeToContents)
         
-    def edit_row(self, table, row):
+    def edit_row(self, table, button):
+        index = table.indexAt(button.parent().pos())
+        row = index.row()
         table_name = table.objectName()
         
         if table_name == "stockTableWidget":
             dialog = StockEditDialog(table, row)
+        elif table_name == "supplierTableWidget":
+            dialog = SupplierEditDialog(table, row)
+        else:
+            print(f"Table {table} not found")
         
-        dialog = StockEditDialog(table, row)
         dialog.exec_()
 
-    def delete_row(self, table, row):
+    def delete_row(self, table, button):
+        # find real-time row
+        index = table.indexAt(button.parent().pos())
+        row = index.row()
+        
         dialog = DeleteDataDialog(table, row)
         dialog.exec_()
 

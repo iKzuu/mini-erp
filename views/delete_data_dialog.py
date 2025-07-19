@@ -14,12 +14,12 @@ class DeleteDataDialog(QDialog):
         # Make window frameless from default window frame
         self.setWindowFlags(Qt.FramelessWindowHint)
         
-        self.deleteBtn.clicked.connect(self.confirm_delete)
+        self.confirmDeleteBtn.clicked.connect(self.confirm_delete)
         self.cancelBtn.clicked.connect(self.reject)
         
         self.closeBtn.clicked.connect(self.close)
     
-    # Function for delete data when the deleteBtn clicked
+    # Function for delete data when the confirmDeleteBtn clicked
     def confirm_delete(self):
         self.table.removeRow(self.row)
         self.accept()

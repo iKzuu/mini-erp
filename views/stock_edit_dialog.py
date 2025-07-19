@@ -59,7 +59,7 @@ class StockEditDialog(QDialog):
     # to always create a new QTableWidgetItem
     def __new__item(self, value):
         from PyQt5.QtWidgets import QTableWidgetItem
-        return QTableWidgetItem(str(value))
+        return QTableWidgetItem(value)
                 
     # Function for dragable dialog window
     def mousePressEvent(self, event):
