@@ -20,7 +20,7 @@
 	border-radius: 10px;
 }</string>
   </property>
-  <widget class="QPushButton" name="deleteBtn">
+  <widget class="QPushButton" name="confirmDeleteBtn">
    <property name="geometry">
     <rect>
      <x>380</x>
