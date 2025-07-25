@@ -11,12 +11,12 @@ class SupplierEditDialog(QDialog):
         self.table = table
         self.row = row
         
-        item_id = table.item(row, 1).text()
+        item_code = table.item(row, 1).text()
         supplier_name = table.item(row, 2).text()
         phone_number = table.item(row, 3).text()
         address = table.item(row, 4).text()
         
-        self.editItemId.setText(item_id)
+        self.editItemCode.setText(item_code)
         self.editSupplierName.setText(supplier_name)
         self.editPhoneNumber.setText(phone_number)
         self.editAddress.setText(address)
@@ -30,13 +30,13 @@ class SupplierEditDialog(QDialog):
     
     def save_edited_data(self):
         # take data from input
-        item_id = self.editItemId.text()
+        item_code = self.editItemCode.text()
         supplier_name = self.editSupplierName.text()
         phone_number = self.editPhoneNumber.text()
         address = self.editAddress.text()
         
         # update the table data
-        self.table.setItem(self.row, 1, self.__new__item(item_id))
+        self.table.setItem(self.row, 1, self.__new__item(item_code))
         self.table.setItem(self.row, 2, self.__new__item(supplier_name))
         self.table.setItem(self.row, 3, self.__new__item(phone_number))
         self.table.setItem(self.row, 4, self.__new__item(address))
