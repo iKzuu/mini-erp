@@ -6,6 +6,9 @@ import resources_rc
 import data_dummy
 from .stock_edit_dialog import StockEditDialog
 from .supplier_edit_dialog import SupplierEditDialog
+from .transaction_edit_dialog import TransactionEditDialog
+from .category_edit_dialog import CategoryEditDialog
+from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
 
 # from modules.inventory.services.scanner_service import ScannerService
@@ -215,6 +218,12 @@ class MainWindow(QMainWindow):
             dialog = StockEditDialog(table, row)
         elif table_name == "supplierTableWidget":
             dialog = SupplierEditDialog(table, row)
+        elif table_name == "transactionTableWidget":
+            dialog = TransactionEditDialog(table, row)
+        elif table_name == "categoryTableWidget":
+            dialog = CategoryEditDialog(table, row)
+        elif table_name == "warehouseTableWidget":
+            dialog = WarehouseEditDialog(table, row)
         else:
             print(f"Table {table} not found")
         
