@@ -376,12 +376,12 @@ QLineEdit:focus{
        </font>
       </property>
       <property name="text">
-       <string>ID Barang</string>
+       <string>Kode Barang</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="editItemId">
+     <widget class="QLineEdit" name="editItemCode">
       <property name="minimumSize">
        <size>
         <width>200</width>

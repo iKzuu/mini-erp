@@ -37,7 +37,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>241</width>
+     <width>243</width>
      <height>42</height>
     </rect>
    </property>
@@ -157,12 +157,12 @@ QPushButton:hover{
        </font>
       </property>
       <property name="text">
-       <string>ID Gudang</string>
+       <string>Kode Gudang</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="editWarehouseId">
+     <widget class="QLineEdit" name="editWarehouseCode">
       <property name="minimumSize">
        <size>
         <width>200</width>
@@ -352,7 +352,6 @@ QLineEdit:focus{
  </widget>
  <resources>
   <include location="../assets/icons/resources.qrc"/>
-  <include location="../../../../Python/Lib/site-packages/qt5_applications/Qt/assets/icons/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

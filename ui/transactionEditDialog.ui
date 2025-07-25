@@ -157,12 +157,12 @@ QPushButton:hover{
        </font>
       </property>
       <property name="text">
-       <string>ID Barang</string>
+       <string>Kode Barang</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="editItemId">
+     <widget class="QLineEdit" name="editItemCode">
       <property name="minimumSize">
        <size>
         <width>200</width>
@@ -212,12 +212,12 @@ QLineEdit:focus{
        </font>
       </property>
       <property name="text">
-       <string>ID Gudang</string>
+       <string>Kode Gudang</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="editWarehouseId">
+     <widget class="QLineEdit" name="editWarehouseCode">
       <property name="minimumSize">
        <size>
         <width>200</width>
