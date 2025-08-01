@@ -355,10 +355,46 @@ QLineEdit:focus{
     <string>Cancel</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="closeBtn">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>5</y>
+     <width>35</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	border: none;
+}
+
+QPushButton:hover{
+	border-left: 1px solid #D9D9D9;
+	border-bottom: 1px solid #D9D9D9;
+	border-bottom-left-radius: 6px;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../assets/icons/resources.qrc">
+     <normaloff>:/icons/close.svg</normaloff>:/icons/close.svg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="../assets/icons/resources.qrc"/>
-  <include location="../../../../Python/Lib/site-packages/qt5_applications/Qt/assets/icons/resources.qrc"/>
  </resources>
  <connections/>
 </ui>
