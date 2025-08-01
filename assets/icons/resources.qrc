@@ -1,5 +1,29 @@
 <RCC>
   <qresource prefix="icons">
+    <file>active-supplier.svg</file>
+    <file>active-supplier-blue.svg</file>
+    <file>active-supplier-white.svg</file>
+    <file>new-this-month.svg</file>
+    <file>new-this-month-blue.svg</file>
+    <file>new-this-month-white.svg</file>
+    <file>top-supplier.svg</file>
+    <file>top-supplier-blue.svg</file>
+    <file>top-supplier-white.svg</file>
+    <file>total-supplier.svg</file>
+    <file>total-supplier-blue.svg</file>
+    <file>total-supplier-white.svg</file>
+    <file>low-stock.svg</file>
+    <file>low-stock-blue.svg</file>
+    <file>low-stock-white.svg</file>
+    <file>out-of-stock.svg</file>
+    <file>out-of-stock-blue.svg</file>
+    <file>out-of-stock-white.svg</file>
+    <file>recently-added-stock.svg</file>
+    <file>recently-added-stock-blue.svg</file>
+    <file>recently-added-stock-white.svg</file>
+    <file>total-stock.svg</file>
+    <file>total-stock-blue.svg</file>
+    <file>total-stock-white.svg</file>
     <file>close.svg</file>
     <file>close-blue.svg</file>
     <file>close-white.svg</file>
