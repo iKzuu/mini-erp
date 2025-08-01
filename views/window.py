@@ -1,7 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QSize
+from PyQt5 import QtChart
 import resources_rc
 import data_dummy
 from .stock_edit_dialog import StockEditDialog
@@ -9,6 +10,8 @@ from .supplier_edit_dialog import SupplierEditDialog
 from .transaction_edit_dialog import TransactionEditDialog
 from .category_edit_dialog import CategoryEditDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
+from .user_edit_dialog import UserEditDialog
+from .history_edit_dialog import HistoryEditDialog
 from .delete_data_dialog import DeleteDataDialog
 
 # from modules.inventory.services.scanner_service import ScannerService
@@ -138,6 +141,8 @@ class MainWindow(QMainWindow):
             table.setRowCount(row_count)
             table.setColumnCount(column_count)
             table.setHorizontalHeaderLabels(headers)
+            
+            self.adjust_table_columns(table, len(headers) - 1)
 
             for row_num, row_data in enumerate(data):
                 for col_num, cell_data in enumerate(row_data):
@@ -145,13 +150,22 @@ class MainWindow(QMainWindow):
                     table.setItem(row_num, col_num, item)
                     
                 self.add_crud_buttons(table, row_num)
+                
+    def adjust_table_columns(self, table, action_column_index):
+        header = table.horizontalHeader()
+        header.setStretchLastSection(False)
+        for col in range(table.columnCount()):
+            if col == action_column_index:
+                header.setSectionResizeMode(col, QHeaderView.ResizeToContents)
+            else:
+                header.setSectionResizeMode(col, QHeaderView.Stretch)
             
     def add_crud_buttons(self, table, row):
         widget = QWidget()
         widget.setStyleSheet("background: transparent;")
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(50)
+        layout.setSpacing(30)
         layout.setAlignment(Qt.AlignCenter)
 
         # Edit Button
@@ -224,6 +238,10 @@ class MainWindow(QMainWindow):
             dialog = CategoryEditDialog(table, row)
         elif table_name == "warehouseTableWidget":
             dialog = WarehouseEditDialog(table, row)
+        elif table_name == "userTableWidget":
+            dialog = UserEditDialog(table, row)
+        elif table_name == "historyTableWidget":
+            dialog = HistoryEditDialog(table, row)
         else:
             print(f"Table {table} not found")
         
