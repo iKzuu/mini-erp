@@ -1,5 +1,41 @@
 <RCC>
   <qresource prefix="icons">
+    <file>active-warehouse.svg</file>
+    <file>active-warehouse-blue.svg</file>
+    <file>active-warehouse-white.svg</file>
+    <file>empty-category.svg</file>
+    <file>empty-category-blue.svg</file>
+    <file>empty-category-white.svg</file>
+    <file>incoming-transaction.svg</file>
+    <file>incoming-transaction-blue.svg</file>
+    <file>incoming-transaction-white.svg</file>
+    <file>items-per-category.svg</file>
+    <file>items-per-category-blue.svg</file>
+    <file>items-per-category-white.svg</file>
+    <file>most-used-category.svg</file>
+    <file>most-used-category-blue.svg</file>
+    <file>most-used-category-white.svg</file>
+    <file>outgoing-transaction.svg</file>
+    <file>outgoing-transaction-blue.svg</file>
+    <file>outgoing-transaction-white.svg</file>
+    <file>this-month-transaction.svg</file>
+    <file>this-month-transaction-blue.svg</file>
+    <file>this-month-transaction-white.svg</file>
+    <file>total-category.svg</file>
+    <file>total-category-blue.svg</file>
+    <file>total-category-white.svg</file>
+    <file>total-stock-stored.svg</file>
+    <file>total-stock-stored-blue.svg</file>
+    <file>total-stock-stored-white.svg</file>
+    <file>total-transaction.svg</file>
+    <file>total-transaction-blue.svg</file>
+    <file>total-transaction-white.svg</file>
+    <file>total-warehouse.svg</file>
+    <file>total-warehouse-blue.svg</file>
+    <file>total-warehouse-white.svg</file>
+    <file>warehouse-most-items.svg</file>
+    <file>warehouse-most-items-blue.svg</file>
+    <file>warehouse-most-items-white.svg</file>
     <file>active-supplier.svg</file>
     <file>active-supplier-blue.svg</file>
     <file>active-supplier-white.svg</file>
