@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QToolButton, QFileDialog, QWidget, QHBoxLayout, QPushButton, QHeaderView, QTableWidget, QLineEdit
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QSize
@@ -10,10 +10,9 @@ from .supplier_edit_dialog import SupplierEditDialog
 from .transaction_edit_dialog import TransactionEditDialog
 from .category_edit_dialog import CategoryEditDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
-from .user_edit_dialog import UserEditDialog
-from .history_edit_dialog import HistoryEditDialog
 from .delete_data_dialog import DeleteDataDialog
-
+# from .user_edit_dialog import UserEditDialog
+# from .history_edit_dialog import HistoryEditDialog
 # from modules.inventory.services.scanner_service import ScannerService
 
 class MainWindow(QMainWindow):
@@ -25,12 +24,17 @@ class MainWindow(QMainWindow):
         # Hide icon only sidebar when app start
         self.icon_only_widget.hide()
         
+        # automatically open main page when app started
+        self.stackedWidget.setCurrentIndex(0)
+        
+        self.overviewBtn1.setChecked(True)
+        self.overviewBtn2.setChecked(True)
+        
         # Connect hamburgerButton clicked
         self.hamburgerBtn1.clicked.connect(self.toggleSidebar)
         self.hamburgerBtn2.clicked.connect(self.toggleSidebar)
 
         # Switch Page
-        
         # Switch to overview
         self.overviewBtn1.clicked.connect(lambda: self.switch_page(0))
         self.overviewBtn2.clicked.connect(lambda: self.switch_page(0))
@@ -55,13 +59,47 @@ class MainWindow(QMainWindow):
         self.warehouseBtn1.clicked.connect(lambda: self.switch_page(5))
         self.warehouseBtn2.clicked.connect(lambda: self.switch_page(5))
         
-        # Switch to user
-        self.userBtn1.clicked.connect(lambda: self.switch_page(6))
-        self.userBtn2.clicked.connect(lambda: self.switch_page(6))
+        # Searchbar
+        self.searchBtnStock.clicked.connect(
+            lambda: self.search_data_table(self.stockTableWidget, self.inputSearchStock)
+        )
         
-        # Swtich to history
-        self.historyBtn1.clicked.connect(lambda: self.switch_page(7))
-        self.historyBtn2.clicked.connect(lambda: self.switch_page(7))
+        self.searchBtnSupplier.clicked.connect(
+            lambda: self.search_data_table(self.supplierTableWidget, self.inputSearchSupplier)
+        )
+        
+        self.searchBtnTransaction.clicked.connect(
+            lambda: self.search_data_table(self.transactionTableWidget, self.inputSearchTransaction)
+        )
+        
+        self.searchBtnCategory.clicked.connect(
+            lambda: self.search_data_table(self.categoryTableWidget, self.inputSearchCategory)
+        )
+        
+        self.searchBtnWarehouse.clicked.connect(
+            lambda: self.search_data_table(self.supplierTableWidget, self.inputSearchWarehouse)
+        )
+        
+        # automatically search data table without pressing the search button
+        self.inputSearchStock.textChanged.connect(
+            lambda: self.search_data_table(self.stockTableWidget, self.inputSearchStock)
+        )
+        
+        self.inputSearchSupplier.textChanged.connect(
+            lambda: self.search_data_table(self.supplierTableWidget, self.inputSearchSupplier)
+        )
+        
+        self.inputSearchTransaction.textChanged.connect(
+            lambda: self.search_data_table(self.transactionTableWidget, self.inputSearchTransaction)
+        )
+        
+        self.inputSearchCategory.textChanged.connect(
+            lambda: self.search_data_table(self.categoryTableWidget, self.inputSearchCategory)
+        )
+        
+        self.inputSearchWarehouse.textChanged.connect(
+            lambda: self.search_data_table(self.warehouseTableWidget, self.inputSearchWarehouse)
+        )
         
         # Choose file
         self.chooseFileBtn.clicked.connect(self.open_file)
@@ -118,16 +156,16 @@ class MainWindow(QMainWindow):
                 "headers": ["ID", "Nama Warehouse", "Keterangan", "Lokasi", ""],
                 "data": data_dummy.dummy_warehouse
             },
-            {
-                "table": self.userTableWidget,
-                "headers": ["ID", "Nama Lengkap", "Password", "Role", "Refresh Token", "Sign Status", ""],
-                "data": data_dummy.dummy_user
-            },
-            {
-                "table": self.historyTableWidget,
-                "headers": ["ID", "ID Pengguna", "ID Entitas", "ID Gudang", "Waktu", "Aksi", "Entitas", "Before Data", "After Data", "Keterangan", ""],
-                "data": data_dummy.dummy_history
-            }
+            # {
+            #     "table": self.userTableWidget,
+            #     "headers": ["ID", "Nama Lengkap", "Password", "Role", "Refresh Token", "Sign Status", ""],
+            #     "data": data_dummy.dummy_user
+            # },
+            # {
+            #     "table": self.historyTableWidget,
+            #     "headers": ["ID", "ID Pengguna", "ID Entitas", "ID Gudang", "Waktu", "Aksi", "Entitas", "Before Data", "After Data", "Keterangan", ""],
+            #     "data": data_dummy.dummy_history
+            # }
         ]
         
         for info in tables:
@@ -150,6 +188,18 @@ class MainWindow(QMainWindow):
                     table.setItem(row_num, col_num, item)
                     
                 self.add_crud_buttons(table, row_num)
+                
+    def search_data_table(self, table: QTableWidget, input_search: QLineEdit):
+        query = input_search.text().lower()
+        
+        for row in range(table.rowCount()):
+            match = False
+            for column in range(table.columnCount() - 1): # to skip last col (action button "edit" and "delete")
+                item = table.item(row, column)
+                if item and query in item.text().lower():
+                    match = True
+                    break
+            table.setRowHidden(row, not match)
                 
     def adjust_table_columns(self, table, action_column_index):
         header = table.horizontalHeader()
@@ -238,10 +288,10 @@ class MainWindow(QMainWindow):
             dialog = CategoryEditDialog(table, row)
         elif table_name == "warehouseTableWidget":
             dialog = WarehouseEditDialog(table, row)
-        elif table_name == "userTableWidget":
-            dialog = UserEditDialog(table, row)
-        elif table_name == "historyTableWidget":
-            dialog = HistoryEditDialog(table, row)
+        # elif table_name == "userTableWidget":
+        #     dialog = UserEditDialog(table, row)
+        # elif table_name == "historyTableWidget":
+        #     dialog = HistoryEditDialog(table, row)
         else:
             print(f"Table {table} not found")
         
