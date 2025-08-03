@@ -11,12 +11,13 @@ from .transaction_edit_dialog import TransactionEditDialog
 from .category_edit_dialog import CategoryEditDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
+from .warehouse_selection import WarehouseSelection
 # from .user_edit_dialog import UserEditDialog
 # from .history_edit_dialog import HistoryEditDialog
 # from modules.inventory.services.scanner_service import ScannerService
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, warehouse_id = None):
         super(MainWindow, self).__init__()
         uic.loadUi("ui/minierp_cool.ui", self)
         
@@ -55,9 +56,9 @@ class MainWindow(QMainWindow):
         self.categoryBtn1.clicked.connect(lambda: self.switch_page(4))
         self.categoryBtn2.clicked.connect(lambda: self.switch_page(4))
         
-        # Switch to warehouse
-        self.warehouseBtn1.clicked.connect(lambda: self.switch_page(5))
-        self.warehouseBtn2.clicked.connect(lambda: self.switch_page(5))
+        # Back to select warehouse dialog
+        self.warehouseBtn1.clicked.connect(self.return_select_warehouse)
+        self.warehouseBtn2.clicked.connect(self.return_select_warehouse)
         
         # Searchbar
         self.searchBtnStock.clicked.connect(
@@ -74,10 +75,6 @@ class MainWindow(QMainWindow):
         
         self.searchBtnCategory.clicked.connect(
             lambda: self.search_data_table(self.categoryTableWidget, self.inputSearchCategory)
-        )
-        
-        self.searchBtnWarehouse.clicked.connect(
-            lambda: self.search_data_table(self.supplierTableWidget, self.inputSearchWarehouse)
         )
         
         # automatically search data table without pressing the search button
@@ -97,10 +94,6 @@ class MainWindow(QMainWindow):
             lambda: self.search_data_table(self.categoryTableWidget, self.inputSearchCategory)
         )
         
-        self.inputSearchWarehouse.textChanged.connect(
-            lambda: self.search_data_table(self.warehouseTableWidget, self.inputSearchWarehouse)
-        )
-        
         # Choose file
         self.chooseFileBtn.clicked.connect(self.open_file)
         
@@ -110,8 +103,9 @@ class MainWindow(QMainWindow):
         prev_btn.setText("<")
         next_btn.setText(">")
         
+        self.warehouse_id = warehouse_id
         # load data dummy
-        self.load_data()
+        self.load_data(self.warehouse_id)
 
     def switch_page(self, index):
         self.stackedWidget.setCurrentIndex(index)
@@ -128,7 +122,7 @@ class MainWindow(QMainWindow):
         #     ScannerService.scan_barang(file_path)
 
     # Function for load dummy data from data_dummy.py
-    def load_data(self):
+    def load_data(self, warehouse_id = None):
         
         tables = [
             {
@@ -138,56 +132,66 @@ class MainWindow(QMainWindow):
             },
             {
                 "table": self.supplierTableWidget,
-                "headers": ["ID", "ID Barang", "Nama", "Telepon", "Alamat", ""],
+                "headers": ["ID", "Kode Barang", "Nama", "Telepon", "Alamat", ""],
                 "data": data_dummy.dummy_supplier
             },
             {
                 "table": self.transactionTableWidget,
-                "headers": ["ID", "ID Barang", "ID Gudang", "Tanggal", "Jenis", "Jumlah", "Keterangan", ""],
+                "headers": ["ID", "Kode Barang", "Kode Gudang", "Tanggal", "Jenis", "Jumlah", "Keterangan", ""],
                 "data": data_dummy.dummy_transaction
             },
             {
                 "table": self.categoryTableWidget,
-                "headers": ["ID", "ID Gudang", "Nama", "Deskripsi", ""],
+                "headers": ["ID", "Kode Gudang", "Nama", "Deskripsi", ""],
                 "data": data_dummy.dummy_category
             },
             {
                 "table": self.warehouseTableWidget,
                 "headers": ["ID", "Nama Warehouse", "Keterangan", "Lokasi", ""],
-                "data": data_dummy.dummy_warehouse
+                "data": {"all": data_dummy.dummy_warehouse_list}
             },
-            # {
-            #     "table": self.userTableWidget,
-            #     "headers": ["ID", "Nama Lengkap", "Password", "Role", "Refresh Token", "Sign Status", ""],
-            #     "data": data_dummy.dummy_user
-            # },
-            # {
-            #     "table": self.historyTableWidget,
-            #     "headers": ["ID", "ID Pengguna", "ID Entitas", "ID Gudang", "Waktu", "Aksi", "Entitas", "Before Data", "After Data", "Keterangan", ""],
-            #     "data": data_dummy.dummy_history
-            # }
         ]
         
         for info in tables:
             table = info["table"]
             headers = info["headers"]
-            data = info["data"]
+            data_dict = info["data"]
             
-            row_count = len(data)
-            column_count = len(headers)
+            if warehouse_id is not None:
+                filtered_data = data_dict.get(warehouse_id, [])
+            else:
+                filtered_data = []
+                for d in data_dict.values():
+                    filtered_data.extend(d)
             
-            table.setRowCount(row_count)
-            table.setColumnCount(column_count)
+            # row_count = len(data)
+            # column_count = len(headers)
+            
+            table.setRowCount(len(filtered_data))
+            table.setColumnCount(len(headers))
             table.setHorizontalHeaderLabels(headers)
             
             self.adjust_table_columns(table, len(headers) - 1)
 
-            for row_num, row_data in enumerate(data):
+            for row_num, row_data in enumerate(filtered_data):
                 for col_num, cell_data in enumerate(row_data):
                     item = QTableWidgetItem(str(cell_data))
                     table.setItem(row_num, col_num, item)
                     
-                self.add_crud_buttons(table, row_num)
+                self.add_action_buttons(table, row_num)
+                
+    def return_select_warehouse(self):
+        self.close()
+        
+        self.warehouse_selection = WarehouseSelection()
+        self.warehouse_selection.exec_()
+        
+        try:
+            selected_warehouse_id = self.warehouse_selection.get_selected_warehouse_id()
+            self.__init__(warehouse_id=selected_warehouse_id)  # reinit ulang MainWindow
+            self.show()
+        except AttributeError:
+            pass  # tidak memilih gudang
                 
     def search_data_table(self, table: QTableWidget, input_search: QLineEdit):
         query = input_search.text().lower()
@@ -210,7 +214,7 @@ class MainWindow(QMainWindow):
             else:
                 header.setSectionResizeMode(col, QHeaderView.Stretch)
             
-    def add_crud_buttons(self, table, row):
+    def add_action_buttons(self, table, row):
         widget = QWidget()
         widget.setStyleSheet("background: transparent;")
         layout = QHBoxLayout()
@@ -288,10 +292,6 @@ class MainWindow(QMainWindow):
             dialog = CategoryEditDialog(table, row)
         elif table_name == "warehouseTableWidget":
             dialog = WarehouseEditDialog(table, row)
-        # elif table_name == "userTableWidget":
-        #     dialog = UserEditDialog(table, row)
-        # elif table_name == "historyTableWidget":
-        #     dialog = HistoryEditDialog(table, row)
         else:
             print(f"Table {table} not found")
         
