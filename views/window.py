@@ -9,15 +9,12 @@ from .stock_edit_dialog import StockEditDialog
 from .supplier_edit_dialog import SupplierEditDialog
 from .transaction_edit_dialog import TransactionEditDialog
 from .category_edit_dialog import CategoryEditDialog
-from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
 from .warehouse_selection import WarehouseSelection
 from .add_stock_dialog import AddStockDialog
 from .add_supplier_dialog import AddSupplierDialog
 from .add_transaction_dialog import AddTransactionDialog
 from .add_category_dialog import AddCategoryDialog
-# from .user_edit_dialog import UserEditDialog
-# from .history_edit_dialog import HistoryEditDialog
 # from modules.inventory.services.scanner_service import ScannerService
 
 class MainWindow(QMainWindow):
