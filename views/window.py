@@ -12,6 +12,10 @@ from .category_edit_dialog import CategoryEditDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
 from .warehouse_selection import WarehouseSelection
+from .add_stock_dialog import AddStockDialog
+from .add_supplier_dialog import AddSupplierDialog
+from .add_transaction_dialog import AddTransactionDialog
+from .add_category_dialog import AddCategoryDialog
 # from .user_edit_dialog import UserEditDialog
 # from .history_edit_dialog import HistoryEditDialog
 # from modules.inventory.services.scanner_service import ScannerService
@@ -59,6 +63,11 @@ class MainWindow(QMainWindow):
         # Back to select warehouse dialog
         self.warehouseBtn1.clicked.connect(self.return_select_warehouse)
         self.warehouseBtn2.clicked.connect(self.return_select_warehouse)
+        
+        self.addStockBtn.clicked.connect(self.add_data)
+        self.addSupplierBtn.clicked.connect(self.add_data)
+        self.addTransactionBtn.clicked.connect(self.add_data)
+        self.addCategoryBtn.clicked.connect(self.add_data)
         
         # Searchbar
         self.searchBtnStock.clicked.connect(
@@ -277,6 +286,26 @@ class MainWindow(QMainWindow):
         header = table.horizontalHeader()
         header.setSectionResizeMode(col_index, QHeaderView.ResizeToContents)
         
+    def add_data(self):
+        current_index = self.stackedWidget.currentIndex()
+        current_page = self.stackedWidget.widget(current_index)
+        page_name = current_page.objectName()
+        
+        dialog_map = {
+            "page_2": AddStockDialog,
+            "page_3": AddSupplierDialog,
+            "page_4": AddTransactionDialog,
+            "page_5": AddCategoryDialog,
+        }
+        
+        dialog_class = dialog_map.get(page_name)
+        
+        if dialog_class:
+            dialog = dialog_class(self)
+            dialog.exec_()
+        else:
+            print(f"Tidak ada dialog untuk page: {page_name}")
+        
     def edit_row(self, table, button):
         index = table.indexAt(button.parent().pos())
         row = index.row()
@@ -290,8 +319,6 @@ class MainWindow(QMainWindow):
             dialog = TransactionEditDialog(table, row)
         elif table_name == "categoryTableWidget":
             dialog = CategoryEditDialog(table, row)
-        elif table_name == "warehouseTableWidget":
-            dialog = WarehouseEditDialog(table, row)
         else:
             print(f"Table {table} not found")
         
