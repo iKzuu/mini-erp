@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QWidget, QHBoxLayout, QPu
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QSize
+from .add_warehouse_dialog import AddWarehouseDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
 import resources_rc
@@ -14,6 +15,8 @@ class WarehouseSelection(QDialog):
         
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.closeBtn.clicked.connect(self.reject)
+        
+        self.addWarehouseBtn.clicked.connect(self.add_warehouse)
         
         self.inputSearchWarehouse.textChanged.connect(
             lambda: self.search_data_table(self.warehouseTableWidget, self.inputSearchWarehouse)
@@ -161,6 +164,10 @@ class WarehouseSelection(QDialog):
                 header.setSectionResizeMode(col, QHeaderView.ResizeToContents)
             else:
                 header.setSectionResizeMode(col, QHeaderView.Stretch)
+                
+    def add_warehouse(self):
+        dialog = AddWarehouseDialog(self)
+        dialog.exec_()
        
     def edit_row(self, table, button):
         index = table.indexAt(button.parent().pos())
