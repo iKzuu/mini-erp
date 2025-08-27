@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QWidget, QHBoxLayout, QPushButton, QHeaderView, QTableWidget, QLineEdit
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QPoint
 from .add_warehouse_dialog import AddWarehouseDialog
 from .warehouse_edit_dialog import WarehouseEditDialog
 from .delete_data_dialog import DeleteDataDialog
@@ -13,8 +13,15 @@ class WarehouseSelection(QDialog):
         super(WarehouseSelection, self).__init__()
         uic.loadUi("ui/warehouse.ui", self)
         
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        
         self.closeBtn.clicked.connect(self.reject)
+        self.minBtn.clicked.connect(self.showMinimized)
+        
+        self.titleBarWidget.mousePressEvent = self.mouse_press_event
+        self.titleBarWidget.mouseMoveEvent = self.mouse_move_event
+        self.titleBarWidget.mouseReleaseEvent = self.mouse_release_event
         
         self.addWarehouseBtn.clicked.connect(self.add_warehouse)
         
@@ -185,12 +192,16 @@ class WarehouseSelection(QDialog):
         dialog.exec_()
 
     # Function for dragable dialog window
-    def mousePressEvent(self, event):
+    def mouse_press_event(self, event):
         if event.button() == Qt.LeftButton:
             self.dragPos = event.globalPos()
 
-    def mouseMoveEvent(self, event):
+    def mouse_move_event(self, event):
         if event.buttons() == Qt.LeftButton:
             self.move(self.pos() + event.globalPos() - self.dragPos)
             self.dragPos = event.globalPos()
             event.accept()
+            
+    def mouse_release_event(self, event):
+        self.drag_start_position = QPoint()
+        event.accept()
