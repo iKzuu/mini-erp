@@ -1,6 +1,9 @@
 <RCC>
   <qresource prefix="icons">
     <file>add.svg</file>
+    <file>minimize.svg</file>
+    <file>minimize-white.svg</file>
+    <file>minimize-blue.svg</file>
     <file>add-blue.svg</file>
     <file>add-white.svg</file>
     <file>active-warehouse.svg</file>
